@@ -6,7 +6,6 @@
     </form>
     <el-row :gutter="12">
       <!-- Aquí pasamos los props al componente TodoItem -->
-      <!-- Verifica que estamos usando :item y no :todo -->
       <TodoItem
         v-for="(todo, index) in todos"
         :key="'todo-' + index"
