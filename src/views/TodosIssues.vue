@@ -45,7 +45,9 @@ export default {
     return {
       todo: '',
       todos: [],
-      issues: []
+      issues: [],
+      loading: false,
+      error: null
     }
   },
   methods: {
@@ -66,27 +68,30 @@ export default {
         });
     },
     getIssues() {
-      const repo = process.env.VUE_APP_GITHUB_REPO;
-      console.log('Fetching issues for repo:', repo);
-      if (!repo) {
-        console.error('GitHub repo is not defined in environment variables');
-        return;
+  const repo = process.env.VUE_APP_GITHUB_REPO;
+  console.log('Fetching issues for repo:', repo);
+  if (!repo) {
+    console.error('GitHub repo is not defined in environment variables');
+    return;
+  }
+  this.loading = true;
+  this.error = null;
+  client.get(`/repos/${repo}/issues`)
+    .then((res) => {
+      console.log('Issues fetched successfully:', res.data);
+      this.issues = res.data;
+      if (res.data.length === 0) {
+        console.warn('No issues found for this repository');
       }
-      this.loading = true;
-      this.error = null;
-      client.get(`/repos/${repo}/issues`)
-        .then((res) => {
-          console.log('Issues fetched successfully:', res.data);
-          this.issues = res.data;
-        })
-        .catch((error) => {
-          console.error('Error fetching issues:', error.response || error);
-          this.error = 'Error al cargar los issues. Por favor, intenta de nuevo.';
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    }
+    })
+    .catch((error) => {
+      console.error('Error fetching issues:', error.response || error);
+      this.error = 'Error al cargar los issues. Por favor, intenta de nuevo.';
+    })
+    .finally(() => {
+      this.loading = false;
+    });
+}
   },
   created() {
     this.getIssues();
