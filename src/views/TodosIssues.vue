@@ -8,18 +8,16 @@
       <TodoItem
         v-for="(todo, index) in todos"
         :key="'todo-' + index"
-        :item="todo"
+        :todo="todo"
         :index="index"
-        :isTodo="true"
-        @remove-item="removeTodo"
+        @remove-todo="removeTodo"
       />
       <TodoItem
         v-for="(issue, index) in issues"
         :key="'issue-' + index"
-        :item="issue"
+        :todo="issue.title"
         :index="index"
-        :isTodo="false"
-        @remove-item="closeIssue"
+        @remove-todo="closeIssue"
       />
     </el-row>
   </div>

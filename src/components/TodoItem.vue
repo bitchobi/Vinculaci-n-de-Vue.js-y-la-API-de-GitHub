@@ -18,7 +18,7 @@ export default {
   name: 'TodoItem',
   props: {
     todo: {
-      type: String,
+      type: [String, Object],
       required: true
     },
     index: {
