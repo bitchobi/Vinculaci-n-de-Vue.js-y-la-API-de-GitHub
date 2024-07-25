@@ -5,7 +5,6 @@
       <el-input placeholder="todo" v-model="todo"></el-input>
     </form>
     <el-row :gutter="12">
-      <!-- Aquí pasamos los props al componente TodoItem -->
       <TodoItem
         v-for="(todo, index) in todos"
         :key="'todo-' + index"
