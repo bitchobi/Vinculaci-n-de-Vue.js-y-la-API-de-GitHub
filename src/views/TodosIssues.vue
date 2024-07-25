@@ -7,18 +7,23 @@
     </form>
     <el-row :gutter="12">
       <!-- área de visualización de tareas pendientes -->
-      <TodoItem v-for="(todo, index) in todos" :key="index" :todo="todo" :index="index" @remove-todo="removeTodo" />
+      <TodoItem
+        v-for="(todo, index) in todos"
+        :key="'todo-' + index"
+        :item="todo"
+        :index="index"
+        :isTodo="true"
+        @remove-item="removeTodo"
+      />
       <!-- zona de visualización de problemas -->
-      <el-col :span="12" v-for="(issue, index) in issues" :key="issue.id">
-        <el-card class="box-card" shadow="hover" style="margin: 5px 0;">
-          <el-row :gutter="12">
-            <el-col :span="21">{{ issue.title }}</el-col>
-            <el-col :span="3">
-              <el-button @click="closeIssue(index)" type="success" icon="el-icon-check" circle></el-button>
-            </el-col>
-          </el-row>
-        </el-card>
-      </el-col>
+      <TodoItem
+        v-for="(issue, index) in issues"
+        :key="'issue-' + index"
+        :item="issue"
+        :index="index"
+        :isTodo="false"
+        @remove-item="closeIssue"
+      />
     </el-row>
   </div>
 </template>

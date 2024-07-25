@@ -3,9 +3,9 @@
     <el-col :span="12">
       <el-card class="box-card" shadow="hover" style="margin: 5px 0;">
         <el-row :gutter="12">
-          <el-col :span="21">{{ todo }}</el-col>
+          <el-col :span="21">{{ isTodo ? item : item.title }}</el-col>
           <el-col :span="3">
-            <el-button @click="removeTodo" type="success" icon="el-icon-check" circle></el-button>
+            <el-button @click="removeItem" type="success" icon="el-icon-check" circle></el-button>
           </el-col>
         </el-row>
       </el-card>
@@ -17,18 +17,22 @@
 export default {
   name: 'TodoItem',
   props: {
-    todo: {
-      type: String,
+    item: {
+      type: [String, Object],
       required: true
     },
     index: {
       type: Number,
       required: true
+    },
+    isTodo: {
+      type: Boolean,
+      required: true
     }
   },
   methods: {
-    removeTodo() {
-      this.$emit('remove-todo', this.index);
+    removeItem() {
+      this.$emit('remove-item', this.index);
     }
   }
 }
